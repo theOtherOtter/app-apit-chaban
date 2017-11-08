@@ -3,12 +3,12 @@ import ReactDOM from 'react-dom';
 import {
     BrowserRouter as Router,
     Route,
-    Link,
+    //Link,
 } from 'react-router-dom';
 import './styles/index.css';
 import Homepage from './pages/homepage';
 import Singlepage from './pages/singlepage';
-import registerServiceWorker from './registerServiceWorker';
+//import registerServiceWorker from './registerServiceWorker';
 
 class App extends React.Component {
     render(){
