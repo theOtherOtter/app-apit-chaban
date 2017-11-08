@@ -43,13 +43,11 @@ class Homepage extends Component {
     return (
       <div>
         <h2>Prochaines fermetures</h2>
-        {this.state.data.length === 0 && this.state.error === false ?
-          <ProgressBar/> :
-          <List data={this.state.data}/>
-        }
         {this.state.error === true ?
           <p id="errorMessage">An error occured, try to refresh the page</p> :
-          <List data={this.state.data}/>
+          this.state.data.length === 0 ?
+            <ProgressBar/> :
+            <List data={this.state.data}/>
         }
       </div>
     )
