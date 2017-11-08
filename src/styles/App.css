@@ -32,3 +32,18 @@
   font-weight: bold;
   color: red;
 }
+
+.singleCard>div
+{
+  height:200px;
+  width:400px;
+  display:inline-block;
+}
+
+img
+{
+  height:100px;
+  width:100px;
+  position: absolute;
+  margin-left:400px;
+}
