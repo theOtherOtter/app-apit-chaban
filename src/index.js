@@ -8,6 +8,7 @@ import {
 import './styles/index.css';
 import Homepage from './pages/homepage';
 import Singlepage from './pages/singlepage';
+import NotFound from './pages/notfound';
 //import registerServiceWorker from './registerServiceWorker';
 
 class App extends React.Component {
@@ -16,6 +17,7 @@ class App extends React.Component {
             <Router>
                 <div>
                     <Route path="/:id" component={Singlepage}/>
+                    <Route path="/404NotFound" component={NotFound}/>
                     <Route path="/" exact component={Homepage}/>
                 </div>
             </Router>
