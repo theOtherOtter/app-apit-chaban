@@ -25,19 +25,52 @@ class Homepage extends Component {
       })
     })
     .catch(err => {
+      this.setState({
+        error: true,
+      });
       const errStatus = err.response ? err.response.status : 500;
-      if (errStatus === 404){
-        this.setState({
-          error: true,
-        });
-        alert('404');
-      } else {
-        this.setState({
-          error: true,
-        });
-        alert("ERROR " + errStatus);
-      }
-    });
+      switch(errStatus) {
+        case 400:
+          alert('400 – Bad Request');
+          break;
+        case 401:
+          alert('401 – Authorization Required');
+          break;
+        case 403:
+          alert('403 – Forbidden');
+          break;
+        case 404:
+          alert('404 – Not Found');
+          break;
+        case 408:
+          alert('408 – Request Time-Out');
+          break;
+        case 410:
+          alert('410 – Gone');
+          break;
+        case 418:
+          alert('418 – I\'m a teapot');
+          break;
+        case 500:
+          alert('500 – Internal Server Error');
+          break;
+        case 501:
+          alert('501 – Not Implemented');
+          break;
+        case 502:
+          alert('502 – Bad Gateway');
+          break;
+        case 503:
+          alert('503 – Service Temporarily Unavailable');
+          break;
+        case 504:
+          alert('504 – Gateway Time-Out');
+          break;
+        default :
+          alert('An error occured');
+          break;      
+      };
+    })
   }
   render() {
     return (
