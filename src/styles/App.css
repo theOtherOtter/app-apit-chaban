@@ -47,3 +47,8 @@ img
   position: absolute;
   margin-left:400px;
 }
+
+input[type=date]
+{
+  width:200px;
+}

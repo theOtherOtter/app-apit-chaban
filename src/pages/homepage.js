@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './../styles/App.css';
 import List from './../components/list.js';
+import Search from './../components/search.js';
 import {ProgressBar} from 'react-materialize';
 
 class Homepage extends Component {
@@ -76,11 +77,12 @@ class Homepage extends Component {
     return (
       <div>
         <h2>Prochaines fermetures</h2>
+        <Search ref="search"/>
         {this.state.error === true ?
           <p id="errorMessage">An error occured, try to refresh the page</p> :
           this.state.data.length === 0 ?
             <ProgressBar/> :
-            <List data={this.state.data}/>
+              <List data={this.state.data}/>
         }
       </div>
     )
