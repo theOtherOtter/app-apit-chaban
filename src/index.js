@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import {
     BrowserRouter as Router,
     Route,
-    //Link,
 } from 'react-router-dom';
 import './styles/index.css';
 import Homepage from './pages/homepage';
@@ -16,9 +15,9 @@ class App extends React.Component {
         return (
             <Router>
                 <div>
-                    <Route path="/:id" component={Singlepage}/>
-                    <Route path="/404NotFound" component={NotFound}/>
                     <Route path="/" exact component={Homepage}/>
+                    <Route path="/:id(\d+)" component={Singlepage}/>
+                    <Route path="/404NotFound" component={NotFound}/>
                 </div>
             </Router>
         );

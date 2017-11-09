@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import './../styles/App.css';
 import Item from './../components/item.js';
-import Homebutton from './../components/homebutton.js';
-import Prevbutton from './../components/prevbutton.js';
-import Nextbutton from './../components/nextbutton.js';
+import HomeButton from './../components/homebutton.js';
+import PrevButton from './../components/prevbutton.js';
+import NextButton from './../components/nextbutton.js';
 import {ProgressBar} from 'react-materialize';
 
 class Singlepage extends Component {
@@ -144,15 +144,18 @@ class Singlepage extends Component {
     const {match} = this.props;
     return (
       <div>
-        <Homebutton/>
-        <Prevbutton id={match.params.id}/>
-        <Nextbutton id={match.params.id}/>
+        <HomeButton/>
+        <PrevButton id={match.params.id}/>
+        <NextButton id={match.params.id}/>
         <h2>Closure {match.params.id}</h2>
         {this.state.error === true ?
           <p id="errorMessage">An error occured, try to refresh the page</p> :
           this.state.data.length === 0 ?
             <ProgressBar/> :
-            <Item data={this.state.data}/>
+              this.state.data.error === "Not found" &&
+                match.params.id !== "404NotFound" ?
+                  this.props.history.push('/404NotFound') :
+                    <Item data={this.state.data}/>
         }
       </div>
     )
