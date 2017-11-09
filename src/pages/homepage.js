@@ -3,6 +3,7 @@ import './../styles/App.css';
 import List from './../components/list.js';
 import Search from './../components/search.js';
 import {ProgressBar} from 'react-materialize';
+import moment from 'moment'
 
 class Homepage extends Component {
   constructor(props) {
@@ -10,10 +11,12 @@ class Homepage extends Component {
     this.state = {
       data: [],
       error: false,
+      startDate: null,
+      endDate : null,
     }
   }
 
-  componentDidMount() {
+  getClosureList() {
     fetch('http://localhost:1337')
     .then((res) => { 
       console.log('Server response', res);
@@ -73,11 +76,45 @@ class Homepage extends Component {
       };
     })
   }
+
+  getClosureListDateFiltered(startDate, endDate) {
+    this.setState({
+      data: [],
+    })
+    this.setState({ startDate: startDate})
+    this.setState({ endDate: endDate})
+    this.getClosureList();
+    let filteredClosures = this.state.data;
+    filteredClosures = filteredClosures.filter(this.filterByDate,this);
+    this.setState({ data : filteredClosures })
+  }
+
+  filterByDate(closure) {
+    let closureDate = moment(closure.date, "DD/MM/YYYY");
+    let startDate = moment(this.state.startDate, "DD/MM/YY");
+    let endDate = moment(this.state.endDate, "DD/MM/YY");
+    if(closureDate.diff(startDate,'days') >= 0 && (!this.state.endDate || endDate.diff(closureDate,'days') >= 0)) {
+       return closure;
+    }
+    
+    if(endDate.diff(closureDate,'days') >= 0 && (!this.state.startDate || closureDate.diff(startDate,'days') >= 0)) {
+        return closure;
+    }
+    
+     if(!this.state.startDate && !this.state.endDate) {
+      return closure;
+     }
+  }
+
+  componentDidMount() {
+    this.getClosureList();
+  }
+
   render() {
     return (
       <div>
         <h2>Prochaines fermetures</h2>
-        <Search ref="search"/>
+        <Search filterByDate={this.getClosureListDateFiltered.bind(this)}/>
         {this.state.error === true ?
           <p id="errorMessage">An error occured, try to refresh the page</p> :
           this.state.data.length === 0 ?
