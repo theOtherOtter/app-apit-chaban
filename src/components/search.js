@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
+import moment from 'moment'
 
 class Search extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            startDate = new Date(),
-            endDate = new Date(),
+            startDate : moment(),
+            endDate : moment(),
         }
     }
 
   render() {
-    const todayDate = new Date().toISOString().substr(0, 10);
-    const tomorrowDate = new Date(new Date().getTime() + 24 * 60 * 60 * 1000).getFullYear() + '-' + (parseInt(new Date(new Date().getTime() + 24 * 60 * 60 * 1000).getMonth(),10)+1).toString() + '-' + new Date(new Date().getTime() + 24 * 60 * 60 * 1000).getDate(); 
+    const todayDate = moment().format("YYYY-MM-DD");
+    const tomorrowDate = moment().add(1, 'day').format("YYYY-MM-DD");
     return (
       <div>
             <label htmlFor="from">From : </label>
