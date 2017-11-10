@@ -11,6 +11,7 @@ class Homepage extends Component {
       data: [],
       error: false,
       nothingFound: false,
+      incorrectDates: false,
     }
   }
 
@@ -83,29 +84,90 @@ class Homepage extends Component {
     this.setState({
       data: [],
     })
-    console.log('http://localhost:1337/?from='+startDate+'&to='+endDate)
-    fetch('http://localhost:1337/?from='+startDate+'&to='+endDate)
-    .then((res) => { 
-      console.log('Server response', res);
-      return res.json();
-    })
-    .then(jsonData => {
-      console.log('DATA FROM API', jsonData);
-      this.setState({
-        data: jsonData,
-      });
-      if(jsonData.length === 0){
+    if(endDate === "")
+    {
+      fetch('http://localhost:1337/?from='+startDate)
+      .then((res) => { 
+        console.log('Server response', res);
+        return res.json();
+      })
+      .then(jsonData => {
+        console.log('DATA FROM API', jsonData);
         this.setState({
-          nothingFound: true,
+          data: jsonData,
+        });
+        if(jsonData.length === 0){
+          this.setState({
+            nothingFound: true,
+          });
+        }
+      })
+      .catch(err => {
+        this.setState({
+          error: true,
+        });
+        this.throwError(err);
+      });
+    }
+    else if(startDate === "")
+    {
+      fetch('http://localhost:1337/?to='+endDate)
+      .then((res) => { 
+        console.log('Server response', res);
+        return res.json();
+      })
+      .then(jsonData => {
+        console.log('DATA FROM API', jsonData);
+        this.setState({
+          data: jsonData,
+        });
+        if(jsonData.length === 0){
+          this.setState({
+            nothingFound: true,
+          });
+        }
+      })
+      .catch(err => {
+        this.setState({
+          error: true,
+        });
+        this.throwError(err);
+      });
+    }
+    else
+    {
+      if(endDate < startDate)
+      {
+        this.setState({
+          incorrectDates: true,
         });
       }
-    })
-    .catch(err => {
-      this.setState({
-        error: true,
-      });
-      this.throwError(err);
-    })
+      else
+      {
+        fetch('http://localhost:1337/?from='+startDate+'&to='+endDate)
+        .then((res) => { 
+          console.log('Server response', res);
+          return res.json();
+        })
+        .then(jsonData => {
+          console.log('DATA FROM API', jsonData);
+          this.setState({
+            data: jsonData,
+          });
+          if(jsonData.length === 0){
+            this.setState({
+              nothingFound: true,
+            });
+          }
+        })
+        .catch(err => {
+          this.setState({
+            error: true,
+          });
+          this.throwError(err);
+        });
+      }
+    }
   }
 
   componentDidMount() {
@@ -115,15 +177,17 @@ class Homepage extends Component {
   render() {
     return (
       <div>
-        <h2>Prochaines fermetures</h2>
+        <h2>Future closures</h2>
         <Search filterByDate={this.getClosureListDateFiltered.bind(this)}/>
         {this.state.error === true ?
           <p className="errorMessage">An error occured, try to refresh the page</p> :
-            this.state.nothingFound === true ?
-            <p className="errorMessage">Nothing found between these dates</p> :
-                this.state.data.length === 0 ?
-                  <ProgressBar/> :
-                    <List data={this.state.data}/>
+            this.state.incorrectDates === true ?
+              <p className="errorMessage">Dates are incorrect. Maybe start date is after end date</p> :
+                this.state.nothingFound === true ?
+                  <p className="errorMessage">Nothing found between these dates</p> :
+                    this.state.data.length === 0 ?
+                      <ProgressBar/> :
+                        <List data={this.state.data}/>
         }
       </div>
     )

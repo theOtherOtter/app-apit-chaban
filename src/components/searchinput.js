@@ -10,7 +10,6 @@ class SearchInput extends Component {
 
   render() {
     const todayDate = moment().format("YYYY-MM-DD");
-    const tomorrowDate = moment().add(1, 'day').format("YYYY-MM-DD");
     return (
       <div>
             <label htmlFor="from">From : </label>
