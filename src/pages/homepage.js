@@ -10,6 +10,7 @@ class Homepage extends Component {
     this.state = {
       data: [],
       error: false,
+      nothingFound: false,
     }
   }
 
@@ -92,7 +93,12 @@ class Homepage extends Component {
       console.log('DATA FROM API', jsonData);
       this.setState({
         data: jsonData,
-      })
+      });
+      if(jsonData.length === 0){
+        this.setState({
+          nothingFound: true,
+        });
+      }
     })
     .catch(err => {
       this.setState({
@@ -112,10 +118,12 @@ class Homepage extends Component {
         <h2>Prochaines fermetures</h2>
         <Search filterByDate={this.getClosureListDateFiltered.bind(this)}/>
         {this.state.error === true ?
-          <p id="errorMessage">An error occured, try to refresh the page</p> :
-          this.state.data.length === 0 ?
-            <ProgressBar/> :
-              <List data={this.state.data}/>
+          <p className="errorMessage">An error occured, try to refresh the page</p> :
+            this.state.nothingFound === true ?
+            <p className="errorMessage">Nothing found between these dates</p> :
+                this.state.data.length === 0 ?
+                  <ProgressBar/> :
+                    <List data={this.state.data}/>
         }
       </div>
     )
