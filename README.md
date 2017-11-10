@@ -8,7 +8,7 @@ I'm a js noob, please be gentle.
 
 La fonction Search ne fonctionne pas. Je passe les dates au state mais le délai me dérange. Je peux modifier plusieurs fois les dates pour que le state ait au moins la valeur du clic d'avant, mais même comme ça mon filtre ne marche pas. Pourtant j'ai loggé toutes mes valeurs et cela devrait fonctionner.
 
-EDIT: la recherche marche maintenant, mais toujours avec ce délai de MAJ des valeurs qui ne se fait qu'au change suivant.
+__EDIT: la recherche marche maintenant, et j'ai bypass le décalage de la MAJ du state en accédant directement au state et en forçant l'update de ce dernier. C'est caca mais c'est fonctionnel, et les commits précédents attestent de ce qui était fait avant.__
 
 Pour le bouton Next dans les vues single, je n'ai pas réussi à trouver une solution pour empêcher de cliquer dessus si on est arrivé au data.length. Mais au pire, le 404 fire et on comprend bien qu'on a dépassé le data.length.
 
