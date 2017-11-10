@@ -11,6 +11,7 @@ class Singlepage extends Component {
     super(props);
     this.state = {
       data: [],
+      maxDataLength: 0,
       error: false,
     }
   }
@@ -61,6 +62,23 @@ class Singlepage extends Component {
   }
 
   componentDidMount() {
+    fetch('http://localhost:1337')
+    .then((res) => { 
+      console.log('Server response', res);
+      return res.json();
+    })
+    .then(jsonData => {
+      console.log('DATA FROM API', jsonData);
+      this.state.maxDataLength = jsonData.length,
+      this.forceUpdate();
+    })
+    .catch(err => {
+      this.setState({
+        error: true,
+      });
+      this.throwError(err);
+    })
+
     fetch('http://localhost:1337/'+this.props.match.params.id)
     .then((res) => { 
       console.log('Server response', res);
@@ -81,6 +99,23 @@ class Singlepage extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    fetch('http://localhost:1337')
+    .then((res) => { 
+      console.log('Server response', res);
+      return res.json();
+    })
+    .then(jsonData => {
+      console.log('DATA FROM API', jsonData);
+      this.state.maxDataLength = jsonData.length,
+      this.forceUpdate();
+    })
+    .catch(err => {
+      this.setState({
+        error: true,
+      });
+      this.throwError(err);
+    })
+
     this.setState({
       data: [],
     })
@@ -109,7 +144,7 @@ class Singlepage extends Component {
       <div>
         <HomeButton/>
         <PrevButton id={match.params.id}/>
-        <NextButton id={match.params.id}/>
+        <NextButton id={match.params.id} maxDataLength={this.state.maxDataLength}/>
         <h2>Closure {match.params.id}</h2>
         {this.state.error === true ?
           <p id="errorMessage">An error occured, try to refresh the page</p> :

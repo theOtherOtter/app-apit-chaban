@@ -12,9 +12,10 @@ class Nextbutton extends Component {
   render() {
     let id = this.props.id;
     id = parseInt(id,10)+1;
+    const maxDataLength = this.props.maxDataLength;
     return (
         <div>
-            {id > 1 ?
+            {id <= maxDataLength ?
                 <div>
                     <Link to={`/${id}`} refresh="true">Next</Link>
                 </div>
