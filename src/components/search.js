@@ -11,7 +11,7 @@ class Search extends Component {
     }
 
     handleChange = (event) => {
-        const eventToMoment = moment(event.target.value, "YYYY-MM-DD").format("DD/MM/YY");
+        const eventToMoment = moment(event.target.value, "YYYY-MM-DD").format("DD-MM-YY");
         event.target.name === "startDate" ? 
             this.setState({startDate: eventToMoment}) :
                 this.setState({endDate: eventToMoment});

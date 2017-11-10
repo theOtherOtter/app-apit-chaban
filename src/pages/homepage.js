@@ -81,29 +81,65 @@ class Homepage extends Component {
     this.setState({
       data: [],
     })
-    this.setState({ startDate: startDate})
-    this.setState({ endDate: endDate})
-    this.getClosureList();
-    let filteredClosures = this.state.data;
-    filteredClosures = filteredClosures.filter(this.filterByDate,this);
-    this.setState({ data : filteredClosures })
-  }
-
-  filterByDate(closure) {
-    let closureDate = moment(closure.date, "DD/MM/YYYY");
-    let startDate = moment(this.state.startDate, "DD/MM/YY");
-    let endDate = moment(this.state.endDate, "DD/MM/YY");
-    if(closureDate.diff(startDate,'days') >= 0 && (!this.state.endDate || endDate.diff(closureDate,'days') >= 0)) {
-       return closure;
-    }
-    
-    if(endDate.diff(closureDate,'days') >= 0 && (!this.state.startDate || closureDate.diff(startDate,'days') >= 0)) {
-        return closure;
-    }
-    
-     if(!this.state.startDate && !this.state.endDate) {
-      return closure;
-     }
+    console.log('http://localhost:1337/?from='+startDate+'&to='+endDate)
+    fetch('http://localhost:1337/?from='+startDate+'&to='+endDate)
+    .then((res) => { 
+      console.log('Server response', res);
+      return res.json();
+    })
+    .then(jsonData => {
+      console.log('DATA FROM API', jsonData);
+      this.setState({
+        data: jsonData,
+      })
+    })
+    .catch(err => {
+      this.setState({
+        error: true,
+      });
+      const errStatus = err.response ? err.response.status : 500;
+      switch(errStatus) {
+        case 400:
+          alert('400 – Bad Request');
+          break;
+        case 401:
+          alert('401 – Authorization Required');
+          break;
+        case 403:
+          alert('403 – Forbidden');
+          break;
+        case 404:
+          alert('404 – Not Found');
+          break;
+        case 408:
+          alert('408 – Request Time-Out');
+          break;
+        case 410:
+          alert('410 – Gone');
+          break;
+        case 418:
+          alert('418 – I\'m a teapot');
+          break;
+        case 500:
+          alert('500 – Internal Server Error');
+          break;
+        case 501:
+          alert('501 – Not Implemented');
+          break;
+        case 502:
+          alert('502 – Bad Gateway');
+          break;
+        case 503:
+          alert('503 – Service Temporarily Unavailable');
+          break;
+        case 504:
+          alert('504 – Gateway Time-Out');
+          break;
+        default :
+          alert('An error occured');
+          break;      
+      };
+    })
   }
 
   componentDidMount() {
