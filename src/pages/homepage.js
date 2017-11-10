@@ -3,7 +3,6 @@ import './../styles/App.css';
 import List from './../components/list.js';
 import Search from './../components/search.js';
 import {ProgressBar} from 'react-materialize';
-import moment from 'moment'
 
 class Homepage extends Component {
   constructor(props) {
@@ -11,8 +10,6 @@ class Homepage extends Component {
     this.state = {
       data: [],
       error: false,
-      startDate: null,
-      endDate : null,
     }
   }
 
