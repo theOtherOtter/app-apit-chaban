@@ -11,7 +11,7 @@ class ListItem extends Component {
             <div>{this.props.start}</div>
             <div>{this.props.end}</div>
             <div>
-              <Link to={`/${this.props.id}`}>Plus de détails</Link>
+              <Link to={`/${this.props.id}`}>More details</Link>
             </div>
         </Card>
       </div>
