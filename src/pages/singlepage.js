@@ -69,7 +69,7 @@ class Singlepage extends Component {
     })
     .then(jsonData => {
       console.log('DATA FROM API', jsonData);
-      this.state.maxDataLength = jsonData.length,
+      this.state.maxDataLength = jsonData.length;
       this.forceUpdate();
     })
     .catch(err => {
@@ -106,7 +106,7 @@ class Singlepage extends Component {
     })
     .then(jsonData => {
       console.log('DATA FROM API', jsonData);
-      this.state.maxDataLength = jsonData.length,
+      this.state.maxDataLength = jsonData.length;
       this.forceUpdate();
     })
     .catch(err => {

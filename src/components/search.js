@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import moment from 'moment'
+import SearchInput from './searchinput'
 
 class Search extends Component {
     constructor(props) {
@@ -20,14 +21,9 @@ class Search extends Component {
     }
 
   render() {
-    const todayDate = moment().format("YYYY-MM-DD");
-    const tomorrowDate = moment().add(1, 'day').format("YYYY-MM-DD");
     return (
       <div>
-            <label htmlFor="from">From : </label>
-            <input type="date" defaultValue={todayDate} min={todayDate} name="startDate" onChange={this.handleChange}/>
-            <label htmlFor="to">To : </label>
-            <input type="date" defaultValue={tomorrowDate} min={todayDate} name="endDate" onChange={this.handleChange}/>
+            <SearchInput onChange={this.handleChange}/>
       </div>
     )
   }
